@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class Net(nn.Module):
+class LeNet(nn.Module):
 
     def __init__(self):
         super(Net, self).__init__()
@@ -41,7 +41,7 @@ class Net(nn.Module):
     #backward function is automatically defined using autograd
 
 
-net = Net()
+net = LeNet()
 print(net)
 
 #learnable parameters
