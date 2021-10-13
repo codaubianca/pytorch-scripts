@@ -1,3 +1,4 @@
+from numpy.core.numeric import identity
 import torch 
 import numpy as np
 
@@ -17,10 +18,12 @@ shape = (2, 3,)
 rand_tensor = torch.rand(shape)
 ones_tensor = torch.ones(shape)
 zeros_tensor = torch.zeros(shape)
+identity_tensor = torch.eye(3)
 
 print(f"Random Tensor: \n {rand_tensor} \n")
 print(f"Ones Tensor: \n {ones_tensor} \n")
 print(f"Zeros Tensor: \n {zeros_tensor}")
+print(f"Identity Matrix Tensor: \n {identity_tensor}")
 
 
 #Attributes
@@ -58,4 +61,7 @@ print(f"t: {t}")
 n = t.numpy()
 print(f"n: {n}")
 
+t = torch.tensor(np.array([[0.1, 0.2], [0.3, 0.4]]))
+print(f"t: {t}")
+print(f"shape: {t.shape}")
 
