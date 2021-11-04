@@ -1,0 +1,1 @@
+This project contains some code from different tutorials and exercises with the PyTorch framework and some of my notes on the subject. Its purpose is to serve as a collection of examples of Deep Learning applications with PyTorch.
