@@ -9,14 +9,14 @@ from torch.utils.data import DataLoader
 
 
 training_data = datasets.FashionMNIST(
-    root="../data", #path where it will be/already is stored
+    root="./data", #path where it will be/already is stored
     train=True,
     download=True,
     transform=ToTensor()
 )
 
 test_data = datasets.FashionMNIST(
-    root="../data",
+    root="./data",
     train=False,
     download=True,
     transform=ToTensor()

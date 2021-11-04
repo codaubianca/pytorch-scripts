@@ -16,3 +16,4 @@ optim = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9)
 optim.step() #gradient descent --> optimizer adjusts each parameter by its .grad
 
 #TODO read more on how differentiation is used in autograd + how it records data (DAG)
+
