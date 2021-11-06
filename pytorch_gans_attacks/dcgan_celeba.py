@@ -20,6 +20,7 @@ import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data
+from torch.utils.tensorboard import SummaryWriter
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
@@ -27,6 +28,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+
+writer = SummaryWriter()
 # Set random seed for reproducibility
 manualSeed = 999
 #manualSeed = random.randint(1, 10000) # use if you want new results
@@ -277,6 +280,12 @@ for epoch in range(num_epochs):
             print('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f'
                   % (epoch, num_epochs, i, len(dataloader),
                      errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
+            writer.add_scalar("Epoch/Number Of Epochs: ", epoch, num_epochs)
+            writer.add_scalar("Loss_D: ", errD.item())
+            writer.add_scalar("Loss_G: ", errG.item())
+            writer.add_scalar("D(x): ", D_x)
+            writer.add_scalar("D(G(z1)): ", D_G_z1)
+            writer.add_scalar("D(G(z2)): ", D_G_z2)
 
         # Save Losses for plotting later
         G_losses.append(errG.item())
@@ -289,6 +298,8 @@ for epoch in range(num_epochs):
             img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
 
         iters += 1
+
+writer.flush()
 
 #loss vs training iteration
 plt.figure(figsize=(10,5))

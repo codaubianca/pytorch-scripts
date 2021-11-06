@@ -44,7 +44,7 @@ class Net(nn.Module):
 
 # MNIST Test dataset and dataloader declaration
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST('../data', train=False, download=True, transform=transforms.Compose([
+    datasets.MNIST('../data', train=True, download=True, transform=transforms.Compose([
             transforms.ToTensor(),
             ])),
         batch_size=1, shuffle=True)
