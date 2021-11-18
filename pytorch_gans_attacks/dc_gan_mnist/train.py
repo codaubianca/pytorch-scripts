@@ -12,6 +12,8 @@ from dcgan_mnist import Discriminator
 
 writer = SummaryWriter("./logs/")
 
+NUM_EPOCHS = 1
+
 manualSeed = 999
 random.seed(manualSeed)
 torch.manual_seed(manualSeed)
@@ -24,6 +26,9 @@ batch_size = 64
 
 discriminator = Discriminator().to(device)
 generator = Generator().to(device)
+
+discriminator.train()
+generator.train()
 
 criterion = nn.BCELoss()
 
@@ -91,7 +96,7 @@ def train(dataloader, epoch) -> None:
         # Print the loss function every ten iterations and the last iteration in this epoch.
         if (i + 1) % 10 == 0 or (i + 1) == batches:
             print(f"Train stage: adversarial "
-                  f"Epoch[{epoch + 1:04d}/5]({i + 1:05d}/{batches:05d}) "
+                  f"Epoch[{epoch + 1:04d}/{NUM_EPOCHS}]({i + 1:05d}/{batches:05d}) "
                   f"D Loss: {errorD.item():.6f} G Loss: {errorG.item():.6f} "
                   f"D(Real): {d_real:.6f} D(Fake1)/D(Fake2): {D_G_z1:.6f}/{D_G_z2:.6f}.")
 
@@ -108,7 +113,19 @@ def main() -> None:
 
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
                                             shuffle=True)
-    for epoch in range(5):
+
+    dataiter = iter(dataloader)
+    images, _ = dataiter.next()
+
+    img_grid = torchvision.utils.make_grid(images)
+    writer.add_image("mnist_image", img_grid)
+    writer.add_graph(discriminator, images)
+
+    noise = torch.randn(batch_size, 100, 1, 1, device=device)
+    writer.add_graph(generator, noise)
+
+
+    for epoch in range(NUM_EPOCHS):
         train(dataloader, epoch)
 
         torch.save(discriminator.state_dict(), f"./d_epoch{epoch + 1}.pth")
